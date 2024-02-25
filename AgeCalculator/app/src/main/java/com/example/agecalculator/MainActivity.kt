@@ -11,8 +11,7 @@ import java.util.Calendar
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
-    var name: String = "Sarvagya"
-    var age: Int? = null
+
     private var tvSelectedDateTextView: TextView? = null
     private var tvSelectedMinutesTextView: TextView? = null
 
