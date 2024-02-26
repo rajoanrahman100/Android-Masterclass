@@ -61,6 +61,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onEqual(view: View) {
+        if (lastNumeric) {
+            var tvValue = tvInputText?.text.toString()
+            var prefix = ""
+
+            try {
+
+                if (tvValue.startsWith("-")) {
+                    prefix = "-"
+                    tvValue =
+                        tvValue.substring(1) //"-99", it will reduce the - operator through substring
+                }
+
+                if (tvValue.contains("-")) {
+                    val splitValue =
+                        tvValue.split('-') // lets say, "99-1" will be split into "99" and "1" in two different arrays
+                    var one = splitValue[0] // 99
+                    var two = splitValue[1] // 1
+
+                    //Since we remove prefix minus, we need to add it back before split value one
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    val result = one.toDouble() - two.toDouble()
+                    tvInputText?.text = result.toString()
+                }
+
+
+            } catch (e: ArithmeticException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun isOperatorAdded(value: String): Boolean {
 
         return if (value.startsWith("-")) {
