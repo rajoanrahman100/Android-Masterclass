@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         //Now, pass view and retrieve the text
         tvInputText?.append((view as Button).text)
         lastNumeric = true
-        lastDot = false
+        lastDot = true
     }
 
     fun onClear(view: View) {
@@ -34,12 +34,39 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun onOperator(view: View) {
+
+        tvInputText?.text?.let {
+
+            //Condition: lastNumeric=true and isOperatorAdded=false
+
+            if (lastNumeric && !isOperatorAdded(it.toString())) {
+
+                tvInputText?.append((view as Button).text)
+                lastNumeric = false
+                lastDot = false
+
+            }
+        }
+
+
+    }
+
     fun onDecimalPoint(view: View) {
         Log.d("MyTag", "Last Numeric: $lastNumeric, Last Dot: $lastDot")
-        if (lastNumeric && !lastDot) {
+        if (lastNumeric && lastDot) {
             tvInputText?.append(".")
             lastNumeric = false
-            lastDot = true
+            lastDot = false
         }
+    }
+
+    private fun isOperatorAdded(value: String): Boolean {
+
+        return if (value.startsWith("-")) {
+            false
+        } else value.contains("+") || value.contains("-") || value.contains("*") || value.contains(
+            "/"
+        )
     }
 }
