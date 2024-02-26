@@ -157,6 +157,15 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btnDot"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:onClick="onDigit"
+            android:text="@string/Dot" />
+
+        <Button
             android:id="@+id/btnZero"
             android:layout_width="0dp"
             android:layout_height="match_parent"
