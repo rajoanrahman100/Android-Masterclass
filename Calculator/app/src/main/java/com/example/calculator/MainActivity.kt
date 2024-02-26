@@ -86,7 +86,46 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     val result = one.toDouble() - two.toDouble()
-                    tvInputText?.text = result.toString()
+                    tvInputText?.text = removeZeroAfterDot(result.toString())
+                } else if (tvValue.contains("+")) {
+                    val splitValue =
+                        tvValue.split('+') // lets say, "99-1" will be split into "99" and "1" in two different arrays
+                    var one = splitValue[0] // 99
+                    var two = splitValue[1] // 1
+
+                    //Since we remove prefix minus, we need to add it back before split value one
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    val result = one.toDouble() + two.toDouble()
+                    tvInputText?.text = removeZeroAfterDot(result.toString())
+                } else if (tvValue.contains("*")) {
+                    val splitValue =
+                        tvValue.split('*') // lets say, "99-1" will be split into "99" and "1" in two different arrays
+                    var one = splitValue[0] // 99
+                    var two = splitValue[1] // 1
+
+                    //Since we remove prefix minus, we need to add it back before split value one
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    val result = one.toDouble() * two.toDouble()
+                    tvInputText?.text = removeZeroAfterDot(result.toString())
+                } else if (tvValue.contains("/")) {
+                    val splitValue =
+                        tvValue.split('/') // lets say, "99-1" will be split into "99" and "1" in two different arrays
+                    var one = splitValue[0] // 99
+                    var two = splitValue[1] // 1
+
+                    //Since we remove prefix minus, we need to add it back before split value one
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    val result = one.toDouble() / two.toDouble()
+                    tvInputText?.text = removeZeroAfterDot(result.toString())
                 }
 
 
@@ -94,6 +133,13 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun removeZeroAfterDot(result: String): String {
+
+        var value = result
+        if (result.contains(".0")) value = result.substring(0, result.length - 2)
+        return value
     }
 
     private fun isOperatorAdded(value: String): Boolean {
