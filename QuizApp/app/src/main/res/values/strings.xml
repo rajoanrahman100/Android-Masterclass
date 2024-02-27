@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QuizApp</string>
+    <string name="quiz_app">Quiz App</string>
+    <string name="welcome">Welcome</string>
+    <string name="e_g_rifat">e.g. Rifat</string>
+    <string name="start">Start</string>
 </resources>
