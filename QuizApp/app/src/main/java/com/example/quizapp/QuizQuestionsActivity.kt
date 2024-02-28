@@ -1,5 +1,6 @@
 package com.example.quizapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -20,6 +21,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var tvOptionThree: TextView? = null
     private var tvOptionFour: TextView? = null
     private var buttonSubmit: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_questions)
@@ -35,10 +37,14 @@ class QuizQuestionsActivity : AppCompatActivity() {
         buttonSubmit = findViewById(R.id.btn_submit)
 
 
-        var questionList = Constant.getQuestions()
+        val questionList = Constant.getQuestions()
 
         //Print the question size
         Log.i("Question Size", Constant.getQuestions().size.toString())
+        var currentPosition = 1
+        val question = questionList[currentPosition - 1]
+        progressBar?.progress = currentPosition
+        tvProgress?.text = "$currentPosition / ${progressBar?.max}"
 
         for (i in questionList) {
             ivImage?.setImageResource(i.image)
