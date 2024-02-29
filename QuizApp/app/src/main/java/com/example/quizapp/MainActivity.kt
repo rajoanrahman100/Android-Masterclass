@@ -2,10 +2,10 @@ package com.example.quizapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quizapp.model.Constant
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
                 etName?.requestFocus()
             } else {
                 val intent = Intent(this, QuizQuestionsActivity::class.java)
+                intent.putExtra(Constant.USER_NAME, etName?.text.toString())
                 startActivity(intent)
                 finish()
             }
