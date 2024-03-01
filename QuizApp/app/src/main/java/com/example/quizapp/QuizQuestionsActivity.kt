@@ -1,5 +1,6 @@
 package com.example.quizapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -38,9 +39,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_quiz_questions)
 
         //Get the NAME from intent and assign it the variable
-        // START
+        mUserName = intent.getStringExtra(Constant.USER_NAME)
 
-        // END
         //connect to the view by its id
         progressBar = findViewById(R.id.questionProgressBar)
         tvProgress = findViewById(R.id.tvProgress)
@@ -52,8 +52,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tvOptionFour = findViewById(R.id.tv_option_four)
         buttonSubmit = findViewById(R.id.btn_submit)
         mQuestionsList = Constant.getQuestions()
-        mUserName = intent.getStringExtra(Constant.USER_NAME)
 
+        //Set the questions
         setQuestion()
 
         tvOptionOne?.setOnClickListener(this)
@@ -93,7 +93,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /**
-     * A function to set default options view when the new question is loaded or when the answer is reselected.
+     * A function to set default options view when the new questions is loaded or when the answer is reselected
      */
     private fun defaultOptionsView() {
 
