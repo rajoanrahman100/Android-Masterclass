@@ -18,13 +18,18 @@ class MainActivity : AppCompatActivity() {
         btnStart = findViewById(R.id.btnStart)
         etName = findViewById(R.id.etName)
 
+
+
         btnStart?.setOnClickListener {
             if (etName?.text.toString().isEmpty()) {
                 etName?.error = "Please enter your name"
                 etName?.requestFocus()
             } else {
                 val intent = Intent(this, QuizQuestionsActivity::class.java)
+
+                //Pass value to next activity through intent.putExtra()
                 intent.putExtra(Constant.USER_NAME, etName?.text.toString())
+
                 startActivity(intent)
                 finish()
             }

@@ -1,10 +1,10 @@
 package com.example.quizapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -51,7 +51,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tvOptionThree = findViewById(R.id.tv_option_three)
         tvOptionFour = findViewById(R.id.tv_option_four)
         buttonSubmit = findViewById(R.id.btn_submit)
-        mQuestionsList = Constant.getQuestions()
+        mQuestionsList =
+            Constant.getQuestions() //Load the questions form the Constant and save in a variable
 
         //Set the questions
         setQuestion()
@@ -70,12 +71,16 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
      */
     private fun setQuestion() {
 
+
         val question: Question =
-            mQuestionsList!![mCurrentPosition - 1] // Getting the question from the list with the help of current position.
-        defaultOptionsView()
-        if (mCurrentPosition == mQuestionsList!!.size) {
+            mQuestionsList!![mCurrentPosition - 1] // Getting the question from the list with the help of current position. (mCurrentPosition = 1, so 1-1 = 0)
+
+
+        if (mCurrentPosition == mQuestionsList!!.size) { // Last question when current position is equal to size, mCurrentPosition = 10, mQuestionsList.size = 10
+            Log.d("Size", mQuestionsList!!.size.toString())
             buttonSubmit?.text = "FINISH"
         } else {
+            Log.d("Size", mQuestionsList!!.size.toString())
             buttonSubmit?.text = "SUBMIT"
         }
         progressBar?.progress =
@@ -112,7 +117,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         for (option in options) {
-            option.setTextColor(Color.parseColor("#7A8089"))
+            option.setTextColor(Color.parseColor("#3d3a4b"))
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(
                 this@QuizQuestionsActivity,
@@ -121,6 +126,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //A function to set the view of selected option in the UI
     override fun onClick(view: View?) {
         when (view?.id) {
 
@@ -153,9 +159,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.btn_submit -> {
+
+                //Log.i("Selected Position", mSelectedOptionPosition.toString())
+
                 if (mSelectedOptionPosition == 0) {
                     mCurrentPosition++
 
+                    Log.i("Selected Position", "Equal Zero $mSelectedOptionPosition")
                     when {
                         mCurrentPosition <= mQuestionsList!!.size -> {
                             setQuestion()
@@ -172,6 +182,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 } else {
+                    Log.i("Selected Position", "Not Equal Zero: $mSelectedOptionPosition")
                     val question = mQuestionsList?.get(mCurrentPosition - 1)
 
                     if (question!!.correctAnswer != mSelectedOptionPosition) {
