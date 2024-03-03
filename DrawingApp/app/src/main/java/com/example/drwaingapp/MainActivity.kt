@@ -2,6 +2,7 @@ package com.example.drwaingapp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,8 @@ import androidx.core.view.get
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
-    private var mImageButtonCurrentPaint: ImageButton? = null // A variable for current color is picked from color pallet.
+    private var mImageButtonCurrentPaint: ImageButton? =
+        null // A variable for current color is picked from color pallet.
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,4 +69,29 @@ class MainActivity : AppCompatActivity() {
 
         brushDialog.show()
     }
+
+    fun paintClicked(view: View) {
+        // Toast.makeText(this, "Paint clicked", Toast.LENGTH_SHORT).show()
+        if (view != mImageButtonCurrentPaint) {
+            val imageButton = view as ImageButton
+            val colorTag = imageButton.tag.toString()
+            drawingView?.setColor(colorTag)
+
+            imageButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.pallet_selected
+                )
+            )
+
+            mImageButtonCurrentPaint!!.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this, R.drawable.pallet_normal
+                )
+            )
+
+             mImageButtonCurrentPaint = view
+        }
+    }
+
 }

@@ -117,13 +117,19 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
                 mDrawPath!!.color = color
                 mDrawPath!!.brushThickness = mBrushSize
                 mDrawPath!!.reset()
-                mDrawPath!!.moveTo(touchX!!, touchY!!) // Set the beginning of the next contour to the point (x,y).
+                mDrawPath!!.moveTo(
+                    touchX!!,
+                    touchY!!
+                ) // Set the beginning of the next contour to the point (x,y).
             }
 
             MotionEvent.ACTION_MOVE -> {
                 if (touchX != null) {
                     if (touchY != null) {
-                        mDrawPath!!.lineTo(touchX, touchY) // Add a line from the last point to the specified point (x,y).
+                        mDrawPath!!.lineTo(
+                            touchX,
+                            touchY
+                        ) // Add a line from the last point to the specified point (x,y).
                     }
                 }
             }
@@ -142,9 +148,18 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    fun setSizeForBrush(newSize:Float){
-        mBrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,newSize,resources.displayMetrics)
+    fun setSizeForBrush(newSize: Float) {
+        mBrushSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            newSize,
+            resources.displayMetrics
+        )
         mDrawPaint!!.strokeWidth = mBrushSize
+    }
+
+    fun setColor(newColor: String) {
+        color = Color.parseColor(newColor)
+        mDrawPaint!!.color = color
     }
 
     // Only be usable within my drawing view
