@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         val brushImage = findViewById<ImageButton>(R.id.ib_brush)
         val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
+        val linearLayoutActionButton = findViewById<LinearLayout>(R.id.action_button)
 
         brushImage.setOnClickListener {
             showBrushSizeChooseDialog()
