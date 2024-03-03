@@ -3,11 +3,16 @@ package com.example.drwaingapp
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
+    private var mImageButtonCurrentPaint: ImageButton? = null // A variable for current color is picked from color pallet.
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,13 +21,27 @@ class MainActivity : AppCompatActivity() {
         drawingView?.setSizeForBrush(20.toFloat())
 
         val brushImage = findViewById<ImageButton>(R.id.ib_brush)
+        val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
 
         brushImage.setOnClickListener {
             showBrushSizeChooseDialog()
         }
 
+        //Set the image button pressed on OnCreate
+        mImageButtonCurrentPaint = linearLayoutPaintColor[0] as ImageButton
+        mImageButtonCurrentPaint!!.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.pallet_selected
+            )
+        )
+
 
     }
+
+    /**
+     * Method is used to launch the dialog to select different brush sizes.
+     */
 
     private fun showBrushSizeChooseDialog() {
         val brushDialog = Dialog(this)
