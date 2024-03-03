@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
 
-             mImageButtonCurrentPaint = view
+            mImageButtonCurrentPaint = view
         }
     }
 
