@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         builder.create().show()
     }
 
+    //If user denied any of the permission, this function will redirect user to App Settings
     private fun openAppPermissionSettings(context: Context) {
         val packageName = context.packageName
 
