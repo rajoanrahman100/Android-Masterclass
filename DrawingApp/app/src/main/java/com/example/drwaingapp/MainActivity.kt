@@ -23,11 +23,16 @@ class MainActivity : AppCompatActivity() {
         drawingView?.setSizeForBrush(20.toFloat())
 
         val brushImage = findViewById<ImageButton>(R.id.ib_brush)
+        val imageButton=findViewById<ImageButton>(R.id.ib_galley)
         val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
         val linearLayoutActionButton = findViewById<LinearLayout>(R.id.action_button)
 
         brushImage.setOnClickListener {
             showBrushSizeChooseDialog()
+        }
+
+        imageButton.setOnClickListener {
+
         }
 
         //Set the image button pressed on OnCreate
