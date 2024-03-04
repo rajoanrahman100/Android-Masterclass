@@ -10,7 +10,7 @@
     <Button
         android:id="@+id/permission_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:text="Permission"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -42,29 +42,29 @@ class MainActivity : AppCompatActivity() {
 
                 if (isGranted) {
                     when (permissionName) {
-                        android.Manifest.permission.CAMERA -> {
+                        Manifest.permission.CAMERA -> {
                             Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT)
                                 .show()
                         }
 
-                        android.Manifest.permission.ACCESS_FINE_LOCATION -> {
-                            Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT)
+                        Manifest.permission.ACCESS_FINE_LOCATION -> {
+                            Toast.makeText(this, "Location permission granted for fine location", Toast.LENGTH_SHORT)
                                 .show()
                         }
 
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION -> {
-                            Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT)
+                        Manifest.permission.ACCESS_COARSE_LOCATION -> {
+                            Toast.makeText(this, "Location permission granted coarse location", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
                 } else {
                     when (permissionName) {
-                        android.Manifest.permission.CAMERA -> {
+                        Manifest.permission.CAMERA -> {
                             Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT)
                                 .show()
                         }
 
-                        android.Manifest.permission.ACCESS_FINE_LOCATION -> {
+                        Manifest.permission.ACCESS_FINE_LOCATION -> {
                             Toast.makeText(
                                 this,
                                 "Location permission denied for fine location",
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                                 .show()
                         }
 
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION -> {
+                        Manifest.permission.ACCESS_COARSE_LOCATION -> {
                             Toast.makeText(
                                 this,
                                 "Location permission denied for coarse location",
@@ -107,15 +107,15 @@ class MainActivity : AppCompatActivity() {
                 //cameraResultLauncher.launch(android.Manifest.permission.CAMERA)
             } else {
                 //Single Permission
-                cameraResultLauncher.launch(android.Manifest.permission.CAMERA)
+//                cameraResultLauncher.launch(android.Manifest.permission.CAMERA)
 
                 //Calling multiple permission
-                /*cameraAndLocationResultLauncher.launch(
+                cameraAndLocationResultLauncher.launch(
                     arrayOf(
-                        android.Manifest.permission.CAMERA,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                     )
-                )*/
+                )
             }
         }
     }
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
             .setMessage(message)
-            .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("Go to Settings") { dialog, _ -> openAppPermissionSettings(this) }
         builder.create().show()
     }
 
