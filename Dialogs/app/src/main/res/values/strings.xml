@@ -3,4 +3,10 @@
     <string name="snackbar">Snackbar</string>
     <string name="alert_dialog">Alert Dialog</string>
     <string name="custom_dialog">Custom Dialog</string>
+    <string name="custom_dialog_title">Custom Dialog Title</string>
+    <string name="custom_dialog_content_details_which_you_can_set_your_own_as_per_requirement">Custom Dialog Content Details. Which you can set your own as per requirement.</string>
+    <string name="submit">SUBMIT</string>
+    <string name="cancel">CANCEL</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="custom_progress_dialog">Custom Progress Dialog</string>
 </resources>
