@@ -20,6 +20,7 @@ fun main() {
                 println("Exception Caught ${ex.message}")
             }finally {
                 println("Close resource finally")
+
             }
         }
         println("Main Thread End ${Thread.currentThread().name}")
