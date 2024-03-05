@@ -54,5 +54,5 @@ fun main() {
 * Two ways to Make Coroutines Cooperative
 * 1. a. Only those suspending functions that belongs to kotlin.coroutines package will make coroutines cooperative
 *    b. delay(), yield(), withContext(), withTimeout() etc are the function that belongs to kotlinx.coroutines package
-* 2.
+* 2. Use activeFlag to check if coroutine is still active
 * */
