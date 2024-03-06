@@ -1,11 +1,15 @@
 package com.example.drwaingapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -15,11 +19,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? =
         null // A variable for current color is picked from color pallet.
+
+    private val openGalleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+             result->
+            if(result.resultCode == RESULT_OK && result.data != null){
+                val imageBackGround: ImageView = findViewById(R.id.iv_background_image)
+                result.data?.data?.let {
+
+                }
+                imageBackGround.setImageURI(result.data?.data)
+            }
+        }
 
     private val requestPermission: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(
@@ -34,7 +51,16 @@ class MainActivity : AppCompatActivity() {
                         Manifest.permission.READ_EXTERNAL_STORAGE -> {
                             Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT)
                                 .show()
+                            val intent = Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.INTERNAL_CONTENT_URI //Image path of my device
+                            )
+
+                            openGalleryLauncher.launch(intent)
+
                         }
+
+
                     }
                 } else {
                     when (permissionName) {
@@ -79,6 +105,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+
 
     /*
     * This method is used to request for storage permission
