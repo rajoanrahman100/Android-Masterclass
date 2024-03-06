@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    /** create an ActivityResultLauncher with MultiplePermissions since we are requesting
+     * both read and write
+     */
     private val requestPermission: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -136,11 +139,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         saveBtn.setOnClickListener {
-            if(isReadStorageAllowed()){
+            if (isReadStorageAllowed()) {
                 lifecycleScope.launch {
                     val flDrawingView: FrameLayout = findViewById(R.id.fl_drawing_View_container)
-                    val myBitmap= getBitmapFromView(flDrawingView)
-                    saveBitmapFile(myBitmap )
+                    val myBitmap = getBitmapFromView(flDrawingView)
+                    saveBitmapFile(myBitmap)
                 }
             }
         }
@@ -162,16 +165,20 @@ class MainActivity : AppCompatActivity() {
     * This method is used to request for storage permission
     * */
     private fun requestStoragePermission() {
+        // Check if the permission was denied and show rationale
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
+            //call the rationale dialog to tell the user why they need to allow permission request
             showRationalDialog(
                 "Kid's Drawing App",
                 "Kid's drawing app needs to access your external storage"
             )
         } else {
-
+            // You can directly ask for the permission.
+            //if it has not been denied then request for permission
+            //  The registered ActivityResultCallback gets the result of this request.
             requestPermission.launch(
                 arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -210,13 +217,24 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show()
     }
 
+    /**
+     * Method is called when color is clicked from pallet_normal.
+     *
+     * @param view ImageButton on which click took place.
+     */
+
     fun paintClicked(view: View) {
         // Toast.makeText(this, "Paint clicked", Toast.LENGTH_SHORT).show()
         if (view != mImageButtonCurrentPaint) {
+            // Update the color
             val imageButton = view as ImageButton
+
+            // Here the tag is used for swaping the current color with previous color.
+            // The tag stores the selected view
             val colorTag = imageButton.tag.toString()
             drawingView?.setColor(colorTag)
 
+            // Swap the backgrounds for last active and currently active image button.
             imageButton.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
@@ -229,12 +247,15 @@ class MainActivity : AppCompatActivity() {
                     this, R.drawable.pallet_normal
                 )
             )
-
+            //Current view is updated with selected view in the form of ImageButton.
             mImageButtonCurrentPaint = view
         }
     }
 
-
+    /**  create rationale dialog
+     * Shows rationale dialog for displaying why the app needs permission
+     * Only shown if the user has denied the permission request previously
+     */
     private fun showRationalDialog(title: String, message: String) {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -244,10 +265,30 @@ class MainActivity : AppCompatActivity() {
         builder.create().show()
     }
 
+    /**
+     * We are calling this method to check the permission status
+     */
     private fun isReadStorageAllowed(): Boolean {
+
+        //Getting the permission status
+        // Here the checkSelfPermission is
+        /**
+         * Determine whether <em>you</em> have been granted a particular permission.
+         *
+         * @param permission The name of the permission being checked.
+         *
+         */
+
         val result =
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
+        /**
+         *
+         * @return {@link android.content.pm.PackageManager#PERMISSION_GRANTED} if you have the
+         * permission, or {@link android.content.pm.PackageManager#PERMISSION_DENIED} if not.
+         *
+         */
+        //If permission is granted returning true and If permission is not granted returning false
         return result == PackageManager.PERMISSION_GRANTED
 
     }
@@ -281,14 +322,38 @@ class MainActivity : AppCompatActivity() {
             try {
                 val bytes = ByteArrayOutputStream()
                 mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+
+                /**
+                 * Write a compressed version of the bitmap to the specified outputstream.
+                 * If this returns true, the bitmap can be reconstructed by passing a
+                 * corresponding inputstream to BitmapFactory.decodeStream(). Note: not
+                 * all Formats support all bitmap configs directly, so it is possible that
+                 * the returned bitmap from BitmapFactory could be in a different bitdepth,
+                 * and/or may have lost per-pixel alpha (e.g. JPEG only supports opaque
+                 * pixels).
+                 *
+                 * @param format   The format of the compressed image
+                 * @param quality  Hint to the compressor, 0-100. 0 meaning compress for
+                 *                 small size, 100 meaning compress for max quality. Some
+                 *                 formats, like PNG which is lossless, will ignore the
+                 *                 quality setting
+                 * @param stream   The outputstream to write the compressed data.
+                 * @return true if successfully compressed to the specified stream.
+                 */
+
                 val f = File(
                     externalCacheDir!!.absoluteFile.toString()
                             + File.separator + "KidDrawingApp_" + System.currentTimeMillis() / 1000 + ".png"
                 )
-                val fo = FileOutputStream(f)
-                fo.write(bytes.toByteArray())
-                fo.close()
-                result = f.absolutePath
+                // Here the Environment : Provides access to environment variables.
+                // getExternalStorageDirectory : returns the primary shared/external storage directory.
+                // absoluteFile : Returns the absolute form of this abstract pathname.
+                // File.separator : The system-dependent default name-separator character. This string contains a single character.
+                val fo =
+                    FileOutputStream(f) // Creates a file output stream to write to the file represented by the specified object.
+                fo.write(bytes.toByteArray()) // Writes bytes from the specified byte array to this file output stream.
+                fo.close() // Closes this file output stream and releases any system resources associated with this stream. This file output stream may no longer be used for writing bytes.
+                result = f.absolutePath // The file absolute path is return as a result.
                 runOnUiThread {
                     Toast.makeText(this@MainActivity, "File Saved Successfully", Toast.LENGTH_SHORT)
                         .show()
