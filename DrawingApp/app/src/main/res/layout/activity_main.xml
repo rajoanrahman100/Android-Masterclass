@@ -131,6 +131,14 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_undo" />
 
+        <ImageButton
+            android:id="@+id/ib_redo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/baseline_1k_24" />
+
     </LinearLayout>
 
 

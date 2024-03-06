@@ -83,6 +83,8 @@ class MainActivity : AppCompatActivity() {
 
         val brushImage = findViewById<ImageButton>(R.id.ib_brush)
         val imageButton = findViewById<ImageButton>(R.id.ib_galley)
+        val undoBtn = findViewById<ImageButton>(R.id.ib_undo)
+        val redoBtn = findViewById<ImageButton>(R.id.ib_redo)
         val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
         val linearLayoutActionButton = findViewById<LinearLayout>(R.id.action_button)
 
@@ -92,6 +94,14 @@ class MainActivity : AppCompatActivity() {
 
         imageButton.setOnClickListener {
             requestStoragePermission()
+        }
+
+        undoBtn.setOnClickListener {
+            drawingView!!.onClickUndo()
+        }
+
+        redoBtn.setOnClickListener {
+            drawingView!!.onClickRedo()
         }
 
         //Set the image button pressed on OnCreate
