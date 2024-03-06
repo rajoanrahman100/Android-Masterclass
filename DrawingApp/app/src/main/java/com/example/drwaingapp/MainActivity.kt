@@ -1,13 +1,17 @@
 package com.example.drwaingapp
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -18,8 +22,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
-@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
@@ -27,9 +37,8 @@ class MainActivity : AppCompatActivity() {
         null // A variable for current color is picked from color pallet.
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-             result->
-            if(result.resultCode == RESULT_OK && result.data != null){
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
                 val imageBackGround: ImageView = findViewById(R.id.iv_background_image)
                 result.data?.data?.let {
 
@@ -60,12 +69,37 @@ class MainActivity : AppCompatActivity() {
 
                         }
 
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE -> {
+                            Toast.makeText(
+                                this,
+                                "External Storage permission granted",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            val intent = Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.INTERNAL_CONTENT_URI //Image path of my device
+                            )
+
+                            openGalleryLauncher.launch(intent)
+
+                        }
+
 
                     }
                 } else {
                     when (permissionName) {
                         Manifest.permission.READ_EXTERNAL_STORAGE -> {
                             Toast.makeText(this, "Storage Permission denied", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE -> {
+                            Toast.makeText(
+                                this,
+                                "External Storage Permission denied",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                     }
@@ -84,9 +118,10 @@ class MainActivity : AppCompatActivity() {
         val brushImage = findViewById<ImageButton>(R.id.ib_brush)
         val imageButton = findViewById<ImageButton>(R.id.ib_galley)
         val undoBtn = findViewById<ImageButton>(R.id.ib_undo)
-        val redoBtn = findViewById<ImageButton>(R.id.ib_redo)
+        val saveBtn = findViewById<ImageButton>(R.id.ib_save)
         val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
         val linearLayoutActionButton = findViewById<LinearLayout>(R.id.action_button)
+        //val frameLayout= findViewById<FrameLayout>(R.id.fl_drawing_View_container)
 
         brushImage.setOnClickListener {
             showBrushSizeChooseDialog()
@@ -100,8 +135,14 @@ class MainActivity : AppCompatActivity() {
             drawingView!!.onClickUndo()
         }
 
-        redoBtn.setOnClickListener {
-            drawingView!!.onClickRedo()
+        saveBtn.setOnClickListener {
+            if(isReadStorageAllowed()){
+                lifecycleScope.launch {
+                    val flDrawingView: FrameLayout = findViewById(R.id.fl_drawing_View_container)
+                    val myBitmap= getBitmapFromView(flDrawingView)
+                    saveBitmapFile(myBitmap )
+                }
+            }
         }
 
         //Set the image button pressed on OnCreate
@@ -115,8 +156,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-
 
 
     /*
@@ -136,6 +175,7 @@ class MainActivity : AppCompatActivity() {
             requestPermission.launch(
                 arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 )
             )
         }
@@ -202,6 +242,70 @@ class MainActivity : AppCompatActivity() {
             .setMessage(message)
             .setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
         builder.create().show()
+    }
+
+    private fun isReadStorageAllowed(): Boolean {
+        val result =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        return result == PackageManager.PERMISSION_GRANTED
+
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap {
+
+        //Define a Bitmap with the same size as the view
+        //Create Bitmap: Returns a bitmap width = view width, height = view height
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+
+        //Bitmap a canvas to it
+        val canvas = Canvas(returnedBitmap)
+
+        //Get the view background
+        val bgDrawable = view.background
+
+        //If there is a background drawable, then draw it on the canvas
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas)
+        } else {
+            canvas.drawColor(Color.WHITE)
+        }
+        view.draw(canvas)
+        return returnedBitmap
+    }
+
+    private suspend fun saveBitmapFile(mBitmap: Bitmap): String {
+        var result = ""
+
+        withContext(Dispatchers.IO) {
+            try {
+                val bytes = ByteArrayOutputStream()
+                mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+                val f = File(
+                    externalCacheDir!!.absoluteFile.toString()
+                            + File.separator + "KidDrawingApp_" + System.currentTimeMillis() / 1000 + ".png"
+                )
+                val fo = FileOutputStream(f)
+                fo.write(bytes.toByteArray())
+                fo.close()
+                result = f.absolutePath
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "File Saved Successfully", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } catch (e: Exception) {
+                result = ""
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Something went wrong while saving the file",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        return result
     }
 
 }
