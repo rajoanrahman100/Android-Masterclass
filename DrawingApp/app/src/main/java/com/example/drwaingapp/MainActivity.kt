@@ -12,7 +12,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
@@ -81,8 +80,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /*
+    * This method is used to request for storage permission
+    * */
     private fun requestStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
