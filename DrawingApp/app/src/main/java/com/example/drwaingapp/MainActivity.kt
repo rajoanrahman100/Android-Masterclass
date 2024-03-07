@@ -1,12 +1,14 @@
 package com.example.drwaingapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -124,7 +126,12 @@ class MainActivity : AppCompatActivity() {
         val saveBtn = findViewById<ImageButton>(R.id.ib_save)
         val linearLayoutPaintColor = findViewById<LinearLayout>(R.id.ll_paint_color)
         val linearLayoutActionButton = findViewById<LinearLayout>(R.id.action_button)
+        val shareBtn=findViewById<ImageButton>(R.id.ib_share)
         //val frameLayout= findViewById<FrameLayout>(R.id.fl_drawing_View_container)
+
+        shareBtn.setOnClickListener {
+            shareContent()
+        }
 
         brushImage.setOnClickListener {
             showBrushSizeChooseDialog()
@@ -158,6 +165,21 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun shareContent() {
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Sharing from My App")
+            putExtra(Intent.EXTRA_TEXT, "Check out this awesome content!")
+        }
+
+        val chooser = Intent.createChooser(shareIntent, "Share via")
+        if (shareIntent.resolveActivity(packageManager) != null) {
+            startActivity(chooser)
+        }
     }
 
 
@@ -283,10 +305,8 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
         /**
-         *
          * @return {@link android.content.pm.PackageManager#PERMISSION_GRANTED} if you have the
          * permission, or {@link android.content.pm.PackageManager#PERMISSION_DENIED} if not.
-         *
          */
         //If permission is granted returning true and If permission is not granted returning false
         return result == PackageManager.PERMISSION_GRANTED
