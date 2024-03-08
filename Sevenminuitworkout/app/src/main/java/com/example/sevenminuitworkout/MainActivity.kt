@@ -1,5 +1,6 @@
 package com.example.sevenminuitworkout
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainActivityViewBinding?.root)
 
         mainActivityViewBinding?.flStart?.setOnClickListener {
+            val intent=Intent(this,ExerciseActivity::class.java)
+            startActivity(intent)
 
         }
 
