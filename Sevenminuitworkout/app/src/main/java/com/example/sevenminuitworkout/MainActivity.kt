@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //Todo 4: TO avoid memory leak we unassign the binding once the activity is destroyed
+        //Todo 4: TO avoid memory leak we un-assign the binding once the activity is destroyed.
         mainActivityViewBinding = null
     }
 }
