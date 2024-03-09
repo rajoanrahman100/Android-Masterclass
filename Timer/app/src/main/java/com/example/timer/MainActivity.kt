@@ -48,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         countDownTimer = object : CountDownTimer(timeDuration - pauseOffsetL, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
+                println("MillisUntilFinished $millisUntilFinished")
+                println("Time Duration $timeDuration")
                 pauseOffset = timeDuration - millisUntilFinished
+                println("Pause Offset $pauseOffset")
                 timerText?.text = (millisUntilFinished / 1000).toString()
             }
 
