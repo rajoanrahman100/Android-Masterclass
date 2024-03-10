@@ -9,7 +9,7 @@ import com.example.sevenminuitworkout.databinding.ActivityExerciseBinding
 
 class ExerciseActivity : AppCompatActivity() {
 
-    private var exerciseViewMainBinding: ActivityExerciseBinding? = null
+    private var binding: ActivityExerciseBinding? = null
 
     //How much time i will take for rest
     private var restTimer: CountDownTimer? = null
@@ -26,11 +26,11 @@ class ExerciseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exerciseViewMainBinding = ActivityExerciseBinding.inflate(layoutInflater)
-        setContentView(exerciseViewMainBinding?.root)
+        binding = ActivityExerciseBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         ///TODO:Custom action bar
-        setSupportActionBar(exerciseViewMainBinding?.toolbarExercise)
+        setSupportActionBar(binding?.toolbarExercise)
 
         //Enable back button icon
 
@@ -38,7 +38,7 @@ class ExerciseActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        exerciseViewMainBinding?.toolbarExercise?.setNavigationOnClickListener {
+        binding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -59,7 +59,7 @@ class ExerciseActivity : AppCompatActivity() {
      * Function is used to set the progress of timer using the progress
      */
     private fun setProgressBar() {
-        exerciseViewMainBinding?.progressBar?.progress = restProgress
+        binding?.progressBar?.progress = restProgress
 
 
         /**
@@ -75,8 +75,8 @@ class ExerciseActivity : AppCompatActivity() {
 
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
-                exerciseViewMainBinding?.progressBar?.progress = 10 - restProgress
-                exerciseViewMainBinding?.tvTimer?.text = (10 - restProgress).toString()
+                binding?.progressBar?.progress = 10 - restProgress
+                binding?.tvTimer?.text = (10 - restProgress).toString()
             }
 
             override fun onFinish() {
@@ -95,23 +95,27 @@ class ExerciseActivity : AppCompatActivity() {
      * Function is used to set the progress of the timer using the progress for Exercise View for 30 Seconds
      */
     private fun setExerciseProgressBar() {
-        exerciseViewMainBinding?.progressBarExercise?.progress = exerciseProgress
+        binding?.progressBarExercise?.progress = exerciseProgress
 
         exerciseTimer = object : CountDownTimer(30000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 exerciseProgress++
-                exerciseViewMainBinding?.progressBarExercise?.progress = 30 - exerciseProgress
-                exerciseViewMainBinding?.tvTimerExercise?.text = (30 - exerciseProgress).toString()
+                binding?.progressBarExercise?.progress = 30 - exerciseProgress
+                binding?.tvTimerExercise?.text = (30 - exerciseProgress).toString()
             }
 
             override fun onFinish() {
 
-                Toast.makeText(
-                    applicationContext,
-                    "30 seconds are over, lets go to the rest view",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (exercisePosition < exerciseList?.size!! - 1) {
+                    setRestView()
+                } else {
+                    Toast.makeText(
+                        this@ExerciseActivity,
+                        "Congratulations!! We have done our today's exercise. Take a break now",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
 
             }
@@ -128,14 +132,20 @@ class ExerciseActivity : AppCompatActivity() {
      */
 
     private fun setUpExerciseView() {
-        exerciseViewMainBinding?.flProgressBar?.visibility = View.INVISIBLE
-        exerciseViewMainBinding?.tvTitle?.text = "Exercise Time"
-        exerciseViewMainBinding?.flProgressBarExercise?.visibility = View.VISIBLE
+        binding?.flProgressBar?.visibility = View.INVISIBLE
+        binding?.tvTitle?.visibility = View.INVISIBLE
+        binding?.tvExerciseName?.visibility = View.VISIBLE
+        binding?.flExerciseView?.visibility = View.VISIBLE
+        binding?.ivImage?.visibility = View.VISIBLE
+
 
         if (exerciseTimer != null) {
             exerciseTimer?.cancel()
             exerciseProgress = 0
         }
+
+        binding?.ivImage?.setImageResource(exerciseList!![exercisePosition].getImage())
+        binding?.tvExerciseName?.text = exerciseList!![exercisePosition].getName()
 
         setExerciseProgressBar()
     }
@@ -146,6 +156,13 @@ class ExerciseActivity : AppCompatActivity() {
      * Function is used to set the timer for REST.
      */
     private fun setRestView() {
+
+        binding?.flProgressBar?.visibility = View.VISIBLE
+        binding?.tvTitle?.visibility = View.VISIBLE
+        binding?.tvExerciseName?.visibility = View.INVISIBLE
+        binding?.flExerciseView?.visibility = View.INVISIBLE
+        binding?.ivImage?.visibility = View.INVISIBLE
+
 
         /**
          * Here firstly we will check if the timer is running the and it is not null then cancel the running timer and start the new one.
@@ -179,6 +196,6 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
 
-        exerciseViewMainBinding = null
+        binding = null
     }
 }
