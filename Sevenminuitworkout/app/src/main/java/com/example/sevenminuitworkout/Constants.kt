@@ -20,6 +20,7 @@ object Constants {
             )
         )
 
+
         exerciseList.addAll(exercises)
 
         return exerciseList
