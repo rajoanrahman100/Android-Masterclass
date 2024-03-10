@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <FrameLayout
+     <FrameLayout
         android:id="@+id/flProgressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -69,7 +69,37 @@
                 android:textStyle="bold"
                 tools:text="10" />
         </LinearLayout>
+
     </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tvUpcomingLabel"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Upcoming Exercise"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flProgressBar"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvUpcomingExerciseName"
+        android:layout_width="wrap_content"
+        android:text="Upcoming Exercise"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUpcomingLabel"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/ivImage"

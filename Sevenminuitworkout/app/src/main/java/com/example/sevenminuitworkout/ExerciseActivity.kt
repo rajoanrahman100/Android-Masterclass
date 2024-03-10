@@ -83,7 +83,7 @@ class ExerciseActivity : AppCompatActivity() {
                 // When the 10 seconds will complete this will be executed.
                 // TODO(Step 5 - After completing 10 Seconds of the REST timer start the 30 seconds of Start Exercise View.)
                 // START
-                exercisePosition++
+//                exercisePosition++
                 setUpExerciseView()
             }
         }.start()
@@ -137,6 +137,8 @@ class ExerciseActivity : AppCompatActivity() {
         binding?.tvExerciseName?.visibility = View.VISIBLE
         binding?.flExerciseView?.visibility = View.VISIBLE
         binding?.ivImage?.visibility = View.VISIBLE
+        binding?.tvUpcomingExerciseName?.visibility = View.INVISIBLE
+        binding?.tvUpcomingLabel?.visibility = View.INVISIBLE
 
 
         if (exerciseTimer != null) {
@@ -162,6 +164,10 @@ class ExerciseActivity : AppCompatActivity() {
         binding?.tvExerciseName?.visibility = View.INVISIBLE
         binding?.flExerciseView?.visibility = View.INVISIBLE
         binding?.ivImage?.visibility = View.INVISIBLE
+        binding?.tvUpcomingLabel?.visibility = View.VISIBLE
+        binding?.tvUpcomingExerciseName?.visibility = View.VISIBLE
+        exercisePosition++
+        binding?.tvUpcomingExerciseName?.text = exerciseList!![exercisePosition].getName()
 
 
         /**

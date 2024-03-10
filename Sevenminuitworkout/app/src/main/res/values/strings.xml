@@ -2,4 +2,5 @@
     <string name="app_name">Seven minuit workout</string>
     <string name="start">START</string>
     <string name="get_ready_for">GET READY FOR</string>
+    <string name="upcoming_exercise">Upcoming Exercise</string>
 </resources>
