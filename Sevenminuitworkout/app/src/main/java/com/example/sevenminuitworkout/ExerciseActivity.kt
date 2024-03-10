@@ -11,15 +11,6 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var exerciseViewMainBinding: ActivityExerciseBinding? = null
 
-    //Variables for timer which will be initialized later
-    private var countDownTimer: CountDownTimer? = null
-
-    //The duration of timer in milliseconds
-    private var timeDuration: Long = 11000
-
-    //pauseOffset = timeDuration - timeLeft
-    private var pauseOffset: Long = 0
-
     //How much time i will take for rest
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
