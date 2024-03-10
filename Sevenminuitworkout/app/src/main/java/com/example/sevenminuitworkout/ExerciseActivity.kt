@@ -1,5 +1,7 @@
 package com.example.sevenminuitworkout
 
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -23,6 +25,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var exercisePosition = -1
+
+    private var mediaPlayer:MediaPlayer?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,6 +163,15 @@ class ExerciseActivity : AppCompatActivity() {
      */
     private fun setRestView() {
 
+        try {
+            val soundUri=Uri.parse("android.resource://com.example.sevenminuitworkout/"+R.raw.press_start)
+            mediaPlayer=MediaPlayer.create(applicationContext,soundUri)
+            mediaPlayer?.isLooping=false
+            mediaPlayer?.start()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         binding?.flProgressBar?.visibility = View.VISIBLE
         binding?.tvTitle?.visibility = View.VISIBLE
         binding?.tvExerciseName?.visibility = View.INVISIBLE
@@ -199,6 +212,11 @@ class ExerciseActivity : AppCompatActivity() {
         if (exerciseTimer != null) {
             exerciseTimer?.cancel()
             exerciseProgress = 0
+        }
+
+        if(mediaPlayer!=null){
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
         }
 
 
