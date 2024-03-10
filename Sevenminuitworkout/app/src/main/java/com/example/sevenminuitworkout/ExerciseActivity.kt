@@ -54,7 +54,7 @@ class ExerciseActivity : AppCompatActivity() {
 
         /**
          * @param millisInFuture The number of millis in the future from the call
-         *   to {#start()} until the countdown is done and {#onFinish()}
+         *   to {#start()} until the countdown is done and {#+()}
          *   is called.
          * @param countDownInterval The interval along the way to receive
          *   {#onTick(long)} callbacks.
