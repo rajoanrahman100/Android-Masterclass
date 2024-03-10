@@ -16,8 +16,13 @@ class ExerciseActivity : AppCompatActivity() {
     private var restProgress = 0
 
     // TODO(Step 2 - Adding a variables for the 30 seconds Exercise timer.)
-    private var exerciseTimer: CountDownTimer? = null // Variable for Exercise Timer and later on we will initialize it.
-    private var exerciseProgress = 0 // Variable for the exercise timer progress. As initial value the exercise progress is set to 0. As we are about to start.
+    private var exerciseTimer: CountDownTimer? =
+        null // Variable for Exercise Timer and later on we will initialize it.
+    private var exerciseProgress =
+        0 // Variable for the exercise timer progress. As initial value the exercise progress is set to 0. As we are about to start.
+
+    private var exerciseList: ArrayList<ExerciseModel>? = null
+    private var exercisePosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +41,11 @@ class ExerciseActivity : AppCompatActivity() {
         exerciseViewMainBinding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+        exerciseList =
+            Constants.getDefaultExerciseList() //load the exercise list from the constants class.
+
+        println("Exercise List : " + exerciseList?.size)
 
         setRestView()
 
@@ -73,6 +83,7 @@ class ExerciseActivity : AppCompatActivity() {
                 // When the 10 seconds will complete this will be executed.
                 // TODO(Step 5 - After completing 10 Seconds of the REST timer start the 30 seconds of Start Exercise View.)
                 // START
+                exercisePosition++
                 setUpExerciseView()
             }
         }.start()
