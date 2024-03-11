@@ -214,6 +214,7 @@ class ExerciseActivity : AppCompatActivity() {
             exerciseProgress = 0
         }
 
+        //Destroy media player sound
         if(mediaPlayer!=null){
             mediaPlayer?.stop()
             mediaPlayer?.release()
