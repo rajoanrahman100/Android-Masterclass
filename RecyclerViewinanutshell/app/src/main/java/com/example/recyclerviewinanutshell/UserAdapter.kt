@@ -18,6 +18,21 @@ class UserAdapter(private val mUser: ArrayList<User>) :
         val nameTextView = itemView.findViewById<TextView>(R.id.tvUserName)
         val emailTextView = itemView.findViewById<TextView>(R.id.tvUserEmail)
         val emailImageView = itemView.findViewById<ImageView>(R.id.ivImage)
+
+        init {
+            emailImageView.setOnClickListener {
+                val position = adapterPosition
+
+                println("Adapter Position $position")
+                println("Recycler View  Position ${RecyclerView.NO_POSITION}")
+
+                //if (position != RecyclerView.NO_POSITION) {
+                    val user = mUser[position]
+                println("User Name ${user.name}")
+
+            }
+
+        }
     }
 
     // ... constructor and member variables
@@ -44,6 +59,8 @@ class UserAdapter(private val mUser: ArrayList<User>) :
         nameText.text = user.name
         val emailText = holder.emailTextView
         emailText.text = user.email
+        val emailImage = holder.emailImageView
+        emailImage.setImageResource(user.image)
 
     }
 }
