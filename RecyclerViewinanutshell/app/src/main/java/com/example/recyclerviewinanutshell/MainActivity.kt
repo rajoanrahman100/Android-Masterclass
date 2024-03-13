@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         // Create adapter passing in the sample user data
         val adapter = UserAdapter(users!!)
         // Attach the adapter to the recyclerview to populate items
+        //binding!!.userRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
        binding!!.userRecyclerView.adapter = adapter
 
     }
