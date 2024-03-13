@@ -11,9 +11,7 @@ class ExerciseStatusAdapter(val exerciseItemList: ArrayList<ExerciseModel>) :
 
     inner class ExerciseViewHolder(binding: ItemExerciseStatusBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindingItem(binding: ItemExerciseStatusBinding) {
-
-        }
+        val tvItem=binding.tvItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
@@ -29,6 +27,9 @@ class ExerciseStatusAdapter(val exerciseItemList: ArrayList<ExerciseModel>) :
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val model: ExerciseModel = exerciseItemList[position]
+
+        holder.tvItem.text = model.getId().toString()
+
     }
 }
