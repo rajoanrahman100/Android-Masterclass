@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sevenminuitworkout.databinding.ActivityExerciseBinding
 
 class ExerciseActivity : AppCompatActivity() {
@@ -26,7 +27,9 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var exercisePosition = -1
 
-    private var mediaPlayer:MediaPlayer?=null
+    private var mediaPlayer: MediaPlayer? = null
+
+    private var exerciseStatusAdapter: ExerciseStatusAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +55,16 @@ class ExerciseActivity : AppCompatActivity() {
         println("Exercise List : " + exerciseList?.size)
 
         setRestView()
+        setExerciseStatusRecyclerView()
 
+    }
 
+    private fun setExerciseStatusRecyclerView() {
+
+        binding?.rvExerciseStatus?.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        exerciseStatusAdapter = ExerciseStatusAdapter(exerciseList!!)
+        binding?.rvExerciseStatus?.adapter = exerciseStatusAdapter
     }
 
 
@@ -164,11 +175,12 @@ class ExerciseActivity : AppCompatActivity() {
     private fun setRestView() {
 
         try {
-            val soundUri=Uri.parse("android.resource://com.example.sevenminuitworkout/"+R.raw.press_start)
-            mediaPlayer=MediaPlayer.create(applicationContext,soundUri)
-            mediaPlayer?.isLooping=false
+            val soundUri =
+                Uri.parse("android.resource://com.example.sevenminuitworkout/" + R.raw.press_start)
+            mediaPlayer = MediaPlayer.create(applicationContext, soundUri)
+            mediaPlayer?.isLooping = false
             mediaPlayer?.start()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -215,7 +227,7 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         //Destroy media player sound
-        if(mediaPlayer!=null){
+        if (mediaPlayer != null) {
             mediaPlayer?.stop()
             mediaPlayer?.release()
         }
