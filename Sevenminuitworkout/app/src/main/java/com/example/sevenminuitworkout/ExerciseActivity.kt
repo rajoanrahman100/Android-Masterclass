@@ -1,6 +1,7 @@
 package com.example.sevenminuitworkout
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -59,6 +60,12 @@ class ExerciseActivity : AppCompatActivity() {
         setRestView()
         setExerciseStatusRecyclerView()
 
+    }
+
+    private fun customDialogForBackButton(){
+
+        val customDialog = Dialog(this)
+        customDialog.setContentView(R.layout.dialog_custom_back_confirmation)
     }
 
     private fun setExerciseStatusRecyclerView() {
