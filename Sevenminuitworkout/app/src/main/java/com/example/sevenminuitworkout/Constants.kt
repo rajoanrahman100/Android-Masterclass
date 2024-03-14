@@ -12,12 +12,12 @@ object Constants {
             ExerciseModel(
                 2, "Push Up", R.drawable.ic_push_up, false, false
             ),
-            ExerciseModel(
+            /*ExerciseModel(
                 3, "Squat", R.drawable.ic_squat, false, false
             ),
             ExerciseModel(
                 4, "Wall Sit", R.drawable.ic_wall_sit, false, false
-            )
+            )*/
         )
 
 

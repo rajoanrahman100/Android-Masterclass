@@ -1,5 +1,7 @@
 package com.example.sevenminuitworkout
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -122,6 +124,7 @@ class ExerciseActivity : AppCompatActivity() {
                 binding?.tvTimerExercise?.text = (30 - exerciseProgress).toString()
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onFinish() {
 
                 exerciseList!![exercisePosition].setIsSelected(false)
@@ -136,6 +139,9 @@ class ExerciseActivity : AppCompatActivity() {
                         "Congratulations!! We have done our today's exercise. Take a break now",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    val intent= Intent(this@ExerciseActivity,FinishActivity::class.java)
+                    startActivity(intent)
                 }
 
 
