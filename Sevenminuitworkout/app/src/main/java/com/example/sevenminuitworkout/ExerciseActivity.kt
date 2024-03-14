@@ -99,6 +99,8 @@ class ExerciseActivity : AppCompatActivity() {
                 // TODO(Step 5 - After completing 10 Seconds of the REST timer start the 30 seconds of Start Exercise View.)
                 // START
 //                exercisePosition++
+                exerciseList!![exercisePosition].setIsSelected(true)
+                exerciseStatusAdapter!!.notifyDataSetChanged()
                 setUpExerciseView()
             }
         }.start()
@@ -121,6 +123,10 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+
+                exerciseList!![exercisePosition].setIsSelected(false)
+                exerciseList!![exercisePosition].setIsCompleted(true)
+                exerciseStatusAdapter!!.notifyDataSetChanged()
 
                 if (exercisePosition < exerciseList?.size!! - 1) {
                     setRestView()
