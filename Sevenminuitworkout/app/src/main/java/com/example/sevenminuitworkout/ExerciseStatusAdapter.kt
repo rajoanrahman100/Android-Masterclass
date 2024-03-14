@@ -1,7 +1,10 @@
 package com.example.sevenminuitworkout
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sevenminuitworkout.databinding.ItemExerciseStatusBinding
 
@@ -14,7 +17,7 @@ class ExerciseStatusAdapter(val exerciseItemList: ArrayList<ExerciseModel>) :
      */
     inner class ExerciseViewHolder(binding: ItemExerciseStatusBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val tvItem=binding.tvItem
+        val tvItem = binding.tvItem
     }
 
     /**
@@ -30,6 +33,7 @@ class ExerciseStatusAdapter(val exerciseItemList: ArrayList<ExerciseModel>) :
             )
         )
     }
+
     /**
      * Gets the number of items in the list
      */
@@ -51,6 +55,35 @@ class ExerciseStatusAdapter(val exerciseItemList: ArrayList<ExerciseModel>) :
         val model: ExerciseModel = exerciseItemList[position]
 
         holder.tvItem.text = model.getId().toString()
+
+        when {
+            model.getIsSelected() -> {
+                holder.tvItem.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.item_circular_thin_color_accent_border
+                )
+
+                holder.tvItem.setTextColor(Color.parseColor("#212121"))
+            }
+
+            model.getIsCompleted() -> {
+                holder.tvItem.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.item_circular_color_accent_background
+                )
+
+                holder.tvItem.setTextColor(Color.parseColor("#FFFFFF"))
+            }
+
+            else -> {
+                holder.tvItem.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.item_circular_color_gray_background
+                )
+
+                holder.tvItem.setTextColor(Color.parseColor("#212121"))
+            }
+        }
 
     }
 }
