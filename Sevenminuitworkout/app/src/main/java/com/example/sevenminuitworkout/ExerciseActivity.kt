@@ -66,6 +66,7 @@ class ExerciseActivity : AppCompatActivity() {
 
         val customDialog = Dialog(this)
         customDialog.setContentView(R.layout.dialog_custom_back_confirmation)
+        //start working from here
     }
 
     private fun setExerciseStatusRecyclerView() {
