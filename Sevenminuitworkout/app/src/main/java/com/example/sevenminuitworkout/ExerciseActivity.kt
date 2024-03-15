@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sevenminuitworkout.databinding.ActivityExerciseBinding
+import com.example.sevenminuitworkout.databinding.DialogCustomBackConfirmationBinding
 
 class ExerciseActivity : AppCompatActivity() {
 
@@ -49,7 +50,7 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         binding?.toolbarExercise?.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            customDialogForBackButton()
         }
 
         exerciseList =
@@ -62,10 +63,26 @@ class ExerciseActivity : AppCompatActivity() {
 
     }
 
-    private fun customDialogForBackButton(){
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        customDialogForBackButton()
+    }
+
+    private fun customDialogForBackButton() {
 
         val customDialog = Dialog(this)
-        customDialog.setContentView(R.layout.dialog_custom_back_confirmation)
+        val dialogBinding=DialogCustomBackConfirmationBinding.inflate(layoutInflater)
+        customDialog.setContentView(dialogBinding.root)
+        customDialog.setCanceledOnTouchOutside(false)
+        dialogBinding.btnYes.setOnClickListener {
+            finish()
+            customDialog.dismiss()
+        }
+        dialogBinding.btnNo.setOnClickListener {
+            customDialog.dismiss()
+        }
+
+        customDialog.show()
         //start working from here
     }
 
@@ -148,7 +165,7 @@ class ExerciseActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    val intent= Intent(this@ExerciseActivity,FinishActivity::class.java)
+                    val intent = Intent(this@ExerciseActivity, FinishActivity::class.java)
                     startActivity(intent)
                 }
 
