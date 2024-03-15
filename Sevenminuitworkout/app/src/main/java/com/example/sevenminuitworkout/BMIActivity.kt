@@ -1,6 +1,7 @@
 package com.example.sevenminuitworkout
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sevenminuitworkout.databinding.ActivityBmiBinding
 
@@ -22,5 +23,24 @@ class BMIActivity : AppCompatActivity() {
         bmiActivityBind?.toolbarBmiActivity?.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+        bmiActivityBind?.btnCalculateUnits?.setOnClickListener {
+            if (!validateMetricUnit()) {
+                Toast.makeText(this, "Please enter valid values", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+        }
+    }
+
+    private fun validateMetricUnit(): Boolean {
+        var isValid = true
+
+        if (bmiActivityBind?.etMetricUnitWeight?.text.toString().isEmpty()) {
+            isValid = false
+        } else if (bmiActivityBind?.etMetricUnitHeight?.text.toString().isEmpty()) {
+            isValid = false
+        }
+        return isValid
     }
 }
