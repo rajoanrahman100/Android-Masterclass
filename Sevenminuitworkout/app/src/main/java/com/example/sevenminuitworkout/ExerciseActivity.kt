@@ -72,16 +72,27 @@ class ExerciseActivity : AppCompatActivity() {
 
         val customDialog = Dialog(this)
         val dialogBinding=DialogCustomBackConfirmationBinding.inflate(layoutInflater)
+
+        /*Set the screen content from a layout resource.
+        The resource will be inflated, adding all top-level views to the screen.*/
+        // bind to the dialog
         customDialog.setContentView(dialogBinding.root)
+
+        //to ensure that the user clicks one of the button and that the dialog is
+        //not dismissed when surrounding parts of the screen is clicked
         customDialog.setCanceledOnTouchOutside(false)
         dialogBinding.btnYes.setOnClickListener {
-            finish()
+
+            // We need to specify that we are finishing this activity if not the player
+            // continues beeping even after the screen is not visible
+            this@ExerciseActivity.finish()
             customDialog.dismiss()
         }
         dialogBinding.btnNo.setOnClickListener {
             customDialog.dismiss()
         }
 
+        //Start the dialog and display it on screen.
         customDialog.show()
         //start working from here
     }
