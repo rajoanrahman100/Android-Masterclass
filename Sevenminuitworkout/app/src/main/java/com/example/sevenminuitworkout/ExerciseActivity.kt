@@ -97,6 +97,8 @@ class ExerciseActivity : AppCompatActivity() {
         //start working from here
     }
 
+    // TODO(Step 2 - Adding a variables for the 30 seconds Exercise timer.)
+
     private fun setExerciseStatusRecyclerView() {
 
         binding?.rvExerciseStatus?.layoutManager =
