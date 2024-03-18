@@ -33,6 +33,8 @@ class BMIActivity : AppCompatActivity() {
                 bmiActivityBind?.tvBMIDescription?.visibility = android.view.View.VISIBLE
                 bmiActivityBind?.tvBMIDescription?.visibility = android.view.View.VISIBLE
 
+                Toast.makeText(this, "Validate is complete", Toast.LENGTH_SHORT).show()
+
             }
 
         }
