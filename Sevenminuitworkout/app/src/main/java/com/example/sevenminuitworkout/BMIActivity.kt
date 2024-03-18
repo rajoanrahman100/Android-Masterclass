@@ -28,6 +28,11 @@ class BMIActivity : AppCompatActivity() {
             if (!validateMetricUnit()) {
                 Toast.makeText(this, "Please enter valid values", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }else{
+                bmiActivityBind?.tvBMIValue?.visibility = android.view.View.VISIBLE
+                bmiActivityBind?.tvBMIDescription?.visibility = android.view.View.VISIBLE
+                bmiActivityBind?.tvBMIDescription?.visibility = android.view.View.VISIBLE
+
             }
 
         }
