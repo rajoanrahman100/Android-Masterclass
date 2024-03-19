@@ -11,9 +11,10 @@ import com.example.sevenminuitworkout.databinding.ActivityBmiBinding
 class BMIActivity : AppCompatActivity() {
 
     private var bmiActivityBind: ActivityBmiBinding? = null
+
     companion object {
-        private const val METRIC_UNITS_VIEW="METRIC_UNIT_VIEW"
-        private const val US_UNITS_VIEW="US_UNIT_VIEW"
+        private const val METRIC_UNITS_VIEW = "METRIC_UNIT_VIEW"
+        private const val US_UNITS_VIEW = "US_UNIT_VIEW"
     }
 
     private var currentVisibleView: String = METRIC_UNITS_VIEW
@@ -32,6 +33,17 @@ class BMIActivity : AppCompatActivity() {
 
         bmiActivityBind?.toolbarBmiActivity?.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        makeVisibleMetricUnitView()
+
+        bmiActivityBind?.rgUnits?.setOnCheckedChangeListener { _, checkedId: Int ->
+
+            if (checkedId == R.id.rbMetricUnits) {
+                makeVisibleMetricUnitView()
+            } else {
+                makeVisibleUsUnitView()
+            }
         }
 
         bmiActivityBind?.btnCalculateUnits?.setOnClickListener {
@@ -61,6 +73,26 @@ class BMIActivity : AppCompatActivity() {
         bmiActivityBind?.tilUsMetricUnitWeight?.visibility = View.GONE
         bmiActivityBind?.tilMetricUsUnitHeightFeet?.visibility = View.GONE
         bmiActivityBind?.tilMetricUsUnitHeightInch?.visibility = View.GONE
+
+        bmiActivityBind?.etMetricUnitHeight?.text!!.clear()
+        bmiActivityBind?.etMetricUnitWeight?.text!!.clear()
+
+        bmiActivityBind?.llDisplayBMIResult?.visibility = View.INVISIBLE
+    }
+
+    private fun makeVisibleUsUnitView() {
+        currentVisibleView = US_UNITS_VIEW
+        bmiActivityBind?.tilMetricUnitWeight?.visibility = View.GONE
+        bmiActivityBind?.tilMetricUnitHeight?.visibility = View.GONE
+        bmiActivityBind?.tilUsMetricUnitWeight?.visibility = View.VISIBLE
+        bmiActivityBind?.tilMetricUsUnitHeightFeet?.visibility = View.VISIBLE
+        bmiActivityBind?.tilMetricUsUnitHeightInch?.visibility = View.VISIBLE
+
+        bmiActivityBind?.etUsMetricUnitWeight?.text!!.clear()
+        bmiActivityBind?.etUsMetricUnitHeightFeet?.text!!.clear()
+        bmiActivityBind?.etUsMetricUnitHeightInch?.text!!.clear()
+
+        bmiActivityBind?.llDisplayBMIResult?.visibility = View.INVISIBLE
     }
 
     @SuppressLint("SetTextI18n")
@@ -95,7 +127,7 @@ class BMIActivity : AppCompatActivity() {
             bmiDescription = "OMG! You are in a very dangerous condition! Act now!"
         }
 
-        bmiActivityBind?.llDiplayBMIResult?.visibility = View.VISIBLE
+        bmiActivityBind?.llDisplayBMIResult?.visibility = View.VISIBLE
         bmiActivityBind?.tvBMIValue?.text =
             BigDecimal(bmi.toDouble()).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
         bmiActivityBind?.tvBMIType?.text = bmiLabel

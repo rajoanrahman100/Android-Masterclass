@@ -102,7 +102,7 @@
             android:id="@+id/etUsMetricUnitWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="WEIGHT (in kg)"
+            android:hint="WEIGHT (in lb)"
             android:inputType="numberDecimal"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -164,7 +164,7 @@
     <!-- end -->
     <!-- positioned below tilMetricUnitHeight -->
     <LinearLayout
-        android:id="@+id/llDiplayBMIResult"
+        android:id="@+id/llDisplayBMIResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tilMetricUnitHeight"
@@ -216,7 +216,7 @@
         android:id="@+id/btnCalculateUnits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/llDiplayBMIResult"
+        android:layout_below="@id/llDisplayBMIResult"
         android:layout_gravity="bottom"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
