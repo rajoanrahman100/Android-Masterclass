@@ -11,6 +11,13 @@ import com.example.sevenminuitworkout.databinding.ActivityBmiBinding
 class BMIActivity : AppCompatActivity() {
 
     private var bmiActivityBind: ActivityBmiBinding? = null
+    companion object {
+        private const val METRIC_UNITS_VIEW="METRIC_UNIT_VIEW"
+        private const val US_UNITS_VIEW="US_UNIT_VIEW"
+    }
+
+    private var currentVisibleView: String = METRIC_UNITS_VIEW
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bmiActivityBind = ActivityBmiBinding.inflate(layoutInflater)
@@ -45,6 +52,15 @@ class BMIActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun makeVisibleMetricUnitView() {
+        currentVisibleView = METRIC_UNITS_VIEW
+        bmiActivityBind?.tilMetricUnitWeight?.visibility = View.VISIBLE
+        bmiActivityBind?.tilMetricUnitHeight?.visibility = View.VISIBLE
+        bmiActivityBind?.tilUsMetricUnitWeight?.visibility = View.GONE
+        bmiActivityBind?.tilMetricUsUnitHeightFeet?.visibility = View.GONE
+        bmiActivityBind?.tilMetricUsUnitHeightInch?.visibility = View.GONE
     }
 
     @SuppressLint("SetTextI18n")
@@ -96,4 +112,6 @@ class BMIActivity : AppCompatActivity() {
         }
         return isValid
     }
+
+
 }
