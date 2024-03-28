@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
             val intent=Intent(this@MainActivity, AddHappyPlaceActivity::class.java)
             startActivity(intent)
 
+            //Commenting on codes
+
         }
     }
 }
