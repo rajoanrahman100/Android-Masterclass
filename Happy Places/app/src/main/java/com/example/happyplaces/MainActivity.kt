@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
             //Going to AddHappyPlaceActivity
-
+            // Have to to AddHappyPlaceActivity
             //Commenting on codes
 
         }
