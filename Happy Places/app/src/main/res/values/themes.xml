@@ -12,7 +12,7 @@
     </style>
 
     <style name="CustomToolbarStyle">
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/white_color</item>
        <!-- <item name="android:colorControllNormal">@color/white</item>-->
     </style>
 </resources>

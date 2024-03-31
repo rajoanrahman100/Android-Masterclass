@@ -14,10 +14,11 @@ class MainActivity : AppCompatActivity() {
         //Todo 3: Then replace the setContentView parameter with binding?.root
         setContentView(binding?.root)
 
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
         binding?.fabAddHappyPlace?.setOnClickListener {
-            val intent=Intent(this@MainActivity, AddHappyPlaceActivity::class.java)
+            println("fab clicked")
+            val intent=Intent(this, AddHappyPlaceActivity::class.java)
             startActivity(intent)
 
         }
